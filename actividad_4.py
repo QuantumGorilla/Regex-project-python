@@ -42,7 +42,7 @@ def sentence_error():
     fixed = list()
     for word in words:
         errors.append(using_regular(word))
-    fixed_list(errors)    
+    fixed_list(errors, False)    
     
 def list_error():
     words = list()
@@ -56,7 +56,7 @@ def list_error():
     fixed = list()
     for word in words:
         errors.append(using_regular(word))
-    fixed_list(errors)
+    fixed_list(errors, False)
     
 def word_error():
     word = input('Digite una palabra: ')
@@ -80,9 +80,38 @@ def word_error():
             print(error + ' = ' + error.replace('NB', 'MB'))
     else:
         print('No hay error.')
-    
+
+def punctuation(word):
+    if ',' in word:
+        real_word = word.split(',')
+        real_word[1] = ',' 
+        return real_word
+    elif '.' in word:
+        real_word = word.split('.')
+        real_word[1] = '.' 
+        return real_word
+    elif '\n' in word:
+        real_word = word.split('\n')
+        real_word[1] = '\n'
+        return real_word 
+    elif ';' in word:
+        real_word = word.split(';')
+        real_word[1] = ';'
+        return real_word 
+    elif '?' in word:
+        real_word = word.split('?')
+        real_word[1] = '?'
+        return real_word
+    elif '!' in word:
+        real_word = word.split('!')
+        real_word[1] = '\n'
+        return real_word
+    else:
+        return word
+
 def file_error():
     name = input('Digite el nombre del archivo: ')
+    found = False
     try:
         errors_file = open(name + '.txt')
     except IOError:
@@ -98,14 +127,28 @@ def file_error():
     fixed = fixed_list(errors, True)
     errors_file.seek(0,0)
     fixed_file = open('fixed.txt', 'w+')
-    real_errors[:] = (error for error in errors if type(error) == str)
+    errors[:] = (error for error in errors if type(error) == str)
     for line in errors_file: 
         words = line.split(' ')
         row = ''
         for word in words:
-            if word in errors:
-                words[errors.index(word)] = fixed[real_errors.index(word)]
-            row += ' ' + word
+            real_word = punctuation(word)
+            if real_word[0] in errors:
+                fixed_word = fixed[errors.index(real_word[0])]
+                found = True
+            elif real_word in errors:
+                fixed_word = fixed[errors.index(real_word)]
+                found = True
+            if found:
+                if '\n' in word:
+                    row += ' ' + fixed_word + real_word[1] + '\n'
+                elif type(real_word) == list:
+                    row += ' ' + fixed_word + real_word[1]
+                else:
+                    row += ' ' + fixed_word
+                found = False
+            else:
+                row += ' ' + word
         fixed_file.write(row)
     errors_file.close()
     fixed_file.close()
