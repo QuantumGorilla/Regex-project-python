@@ -1,12 +1,13 @@
 # Filtrar textos que contengan el error de n seguida de b o n seguida de p y reemplazar por m en ambos casos
 import re
+import sys
 
 def using_regular(word):
     e = re.search('(\w*[nN][bB]\w*)|(\w*[nN][pP]\w*)', word, flags=re.IGNORECASE)
     if e:
         return e.group()
 
-def fixed_list(errors):
+def fixed_list(errors, isFile):
     errors[:] = (error for error in errors if type(error) == str)
     if len(errors) > 0:
         fixed = []
@@ -29,6 +30,8 @@ def fixed_list(errors):
                 fixed.append(error.replace('NB', 'MB'))
         for i,j in zip(errors, fixed):
             print(i + ' = ' + j)
+        if isFile:
+            return fixed
     else:
         print('No hubo error/es.')
 
@@ -80,14 +83,32 @@ def word_error():
     
 def file_error():
     name = input('Digite el nombre del archivo: ')
-    file = open(name + '.txt')
+    try:
+        errors_file = open(name + '.txt')
+    except IOError:
+        print('No se pudo abrir el archivo.')
+        sys.exit()
+    real_errors = []
     errors = []
     fixed = []
-    for line in file:
+    for line in errors_file:
         words = line.split(' ')
         for word in words:
             errors.append(using_regular(word))
-    fixed_list(errors)
+    fixed = fixed_list(errors, True)
+    errors_file.seek(0,0)
+    fixed_file = open('fixed.txt', 'w+')
+    real_errors[:] = (error for error in errors if type(error) == str)
+    for line in errors_file: 
+        words = line.split(' ')
+        row = ''
+        for word in words:
+            if word in errors:
+                words[errors.index(word)] = fixed[real_errors.index(word)]
+            row += ' ' + word
+        fixed_file.write(row)
+    errors_file.close()
+    fixed_file.close()
     
 print('Menu: \n' + '1. Error/es en una oración\n'+  '2. Error/es en una lista\n' +
       '3. Error en una palabra\n' + '4. Error/es en un archivo')
