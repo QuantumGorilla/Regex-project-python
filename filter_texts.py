@@ -117,7 +117,6 @@ def file_error():
     except IOError:
         print('No se pudo abrir el archivo.')
         sys.exit()
-    real_errors = []
     errors = []
     fixed = []
     for line in errors_file:

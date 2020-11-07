@@ -1,4 +1,4 @@
 Hola, soy solo un archivo de prueba para probar como esta funcionando el programa.
 Por cierto, ya te conté acanpar que tengo cule pereza? Quiero probar cosas como acaNpar,
 aboNBar, ACanPriar, ese tipo de cosas. Me despido, adios, aboNbado.
-acaMPar, (test), (brinpa), probanBo; ultima probanBo
+acaMPar, (test), brinpa, probanBo; ultima probanBo
