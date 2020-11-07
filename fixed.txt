@@ -1,4 +1,4 @@
  Hola, soy solo un archivo de prueba para probar como esta funcionando el programa.
  Por cierto, ya te conté acampar que tengo cule pereza? Quiero probar cosas como acaMpar,
  aboMBar, ACamPriar, ese tipo de cosas. Me despido, adios, aboMbado.
- acaMPar, (test), (brinpa), probamBo; ultima probamBo
+ acaMPar, (test), brimpa, probamBo; ultima probamBo

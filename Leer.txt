@@ -1,0 +1,4 @@
+Lenguaje: Python
+Temas:
+1. Filtrar textos que contengan el error de n seguida de b o n seguida de p y reemplazar por m en ambos casos.
+2. Determinar que los parámetros que pasan por valor o referencia en una función en Java están bien definidos.
