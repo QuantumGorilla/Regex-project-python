@@ -23,7 +23,9 @@ identifiers = list()
 #Si usa palabra reservada
 reserved_words = '^(byte|short|int|Integer|long|float|double|Double|boolean|Boolean|char|String|Byte|Short|Long|Float|Character|abstract|catch|final|implements|native|public|switch|true|false|assert|do|finally|import|new|return|synchronized|try|class|else|instanceof|null|short|this|void|break|const|enum|for|package|static|throw|volatile|continue|extends|goto|interface|private|strictfp|throws|while|case|default|if|protected|super|transient)$'
 for ID in ids:
-    if '[]' in ID:
+    if '[][]' in ID:
+        identifiers.append(ID.split('[][]'))
+    elif '[]' in ID:
         identifiers.append(ID.split('[]'))
     elif ' ' in ID:
         identifiers.append(ID.split(' '))
@@ -32,10 +34,12 @@ for identifier in identifiers:
     if re.match(reserved_words,identifier.strip()):
         use_reserved_words = True
     
-#Verificar que identificadores no sean iguales
+#Verificar que identificadores no esten repetidos
 identifiers.clear()
 for ID in ids:
-    if '[]' in ID:
+    if '[][]' in ID:
+        identifiers.append(ID.split('[][]'))
+    elif '[]' in ID:
         identifiers.append(ID.split('[]'))
     elif ' ' in ID:
         identifiers.append(ID.split(' '))
