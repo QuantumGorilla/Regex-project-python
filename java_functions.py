@@ -33,38 +33,28 @@ identifiers[:] = (identifier[1] for identifier in identifiers)
 for identifier in identifiers:
     if re.match(reserved_words,identifier.strip()):
         use_reserved_words = True
-    
+        print('Error, usa palabra reservada el identificador:',identifier)
+
+if use_reserved_words:
+    sys.exit()
+
 #Verificar que identificadores no esten repetidos
-identifiers.clear()
-for ID in ids:
-    if '[][]' in ID:
-        identifiers.append(ID.split('[][]'))
-    elif '[]' in ID:
-        identifiers.append(ID.split('[]'))
-    elif ' ' in ID:
-        identifiers.append(ID.split(' '))
-identifiers[:] = (identifier[1] for identifier in identifiers)
 for identifier in identifiers:
     if identifiers.count(identifier) > 1:
         repeated_ids = True
-    
-# Revisar que no haya <palabra reservada> <tipo de dato> <identificador>
+        print('Error, identificador repetidos:',identifier)
+
+if repeated_ids:
+    sys.exit()
+
+# Revisar que no haya <palabra reservada> <tipo de dato> <identificador> | <identificador>
 for ID in ids:
     if verify_parameters(ID, data_type) == False:
-        print('Error en el parametro: ', ID)
+        print('Error en el parametro:',ID)
         no_error = False
 
 if no_error == False:
     sys.exit()
-
-if repeated_ids:
-    print('Error, Hay identificadores repetidos')
-    sys.exit()
-    
-if use_reserved_words:
-    print('Error, hay identificadores usando palabras reservadas')
-    sys.exit()
     
 if no_error and repeated_ids == False and use_reserved_words == False:
     print('Los parametros estan bien escritos')
-    sys.exit()
